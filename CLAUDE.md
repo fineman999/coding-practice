@@ -1,0 +1,116 @@
+# Algorithm Practice - 코딩 테스트 준비 프로젝트
+
+## 프로젝트 개요
+백엔드 개발자의 코딩 테스트 준비용 멀티 언어(Java, Go, Python) 알고리즘 풀이 저장소.
+모든 문제는 Java, Go, Python 세 언어로 풀이하며, 각 풀이에는 반드시 테스트 코드가 포함된다.
+
+## 프로젝트 구조 (언어 중심)
+```
+algorithm-practice/
+├── CLAUDE.md
+├── README.md              ← 문제 중심 인덱스 (자동 생성)
+├── java/
+│   ├── build.gradle
+│   ├── src/main/java/problems/
+│   │   └── boj1234/Solution.java
+│   └── src/test/java/problems/
+│       └── boj1234/SolutionTest.java
+├── go/
+│   ├── go.mod
+│   └── problems/
+│       └── boj1234/
+│           ├── solution.go
+│           └── solution_test.go
+├── python/
+│   ├── pyproject.toml
+│   └── problems/
+│       └── boj1234/
+│           ├── solution.py
+│           └── test_solution.py
+└── scripts/
+    └── new_problem.sh     ← 문제 템플릿 자동 생성
+```
+
+## 명명 규칙
+- 문제 디렉토리: `{출처}{번호}` (소문자, 언더스코어 없음)
+    - 백준: `boj1234`
+    - 프로그래머스: `pg42586`
+    - LeetCode: `lc1`
+- Java 패키지: `problems.boj1234`
+- Go 패키지: `boj1234`
+- Python 모듈: `problems/boj1234/`
+
+## 새 문제 추가 방법
+```bash
+./scripts/new_problem.sh <출처> <번호> <문제이름> [난이도] [태그]
+# 예시:
+./scripts/new_problem.sh boj 1234 "두 포인터" gold3 "two-pointer,sliding-window"
+./scripts/new_problem.sh pg 42586 "기능개발" lv2 "queue,stack"
+./scripts/new_problem.sh lc 1 "Two Sum" easy "hash-map,array"
+```
+
+## 테스트 실행 방법
+
+### Java (Gradle + JUnit 5)
+```bash
+cd java
+# 전체 테스트
+./gradlew test
+# 특정 문제 테스트
+./gradlew test --tests "problems.boj1234.SolutionTest"
+```
+
+### Go
+```bash
+cd go
+# 전체 테스트
+go test ./problems/...
+# 특정 문제 테스트
+go test ./problems/boj1234/
+# 벤치마크
+go test -bench=. ./problems/boj1234/
+```
+
+### Python (pytest)
+```bash
+cd python
+# 전체 테스트
+pytest
+# 특정 문제 테스트
+pytest problems/boj1234/
+# verbose
+pytest -v problems/boj1234/
+```
+
+## 코드 작성 규칙
+
+### 공통
+- 모든 풀이는 `Solution` 클래스 또는 함수로 작성
+- 테스트 케이스는 최소 3개 이상 (기본, 엣지, 큰 입력)
+- 시간/공간 복잡도를 주석으로 명시
+
+### Java
+- JDK 17+ 기준
+- 패키지: `problems.{문제ID}`
+- 클래스명: `Solution` (풀이), `SolutionTest` (테스트)
+- JUnit 5 + AssertJ 사용
+
+### Go
+- Go 1.21+ 기준
+- 패키지: `{문제ID}`
+- 함수명: `Solve` 또는 문제에 맞는 이름 (exported)
+- 표준 `testing` 패키지 사용
+- 벤치마크 테스트 포함 권장
+
+### Python
+- Python 3.11+ 기준
+- 함수명: `solve` 또는 문제에 맞는 이름
+- pytest 사용
+- type hint 권장
+
+## Claude Code 작업 시 주의사항
+1. 새 문제를 추가할 때는 반드시 `./scripts/new_problem.sh`를 사용할 것
+2. 풀이 작성 후 테스트가 통과하는지 확인할 것
+3. README.md의 문제 인덱스를 업데이트할 것 (`./scripts/update_readme.sh`)
+4. 커밋 메시지 형식: `solve: [출처][번호] 문제이름 (언어)`
+    - 예: `solve: [BOJ][1234] 두 포인터 (java, go, python)`

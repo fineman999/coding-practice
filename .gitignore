@@ -1,0 +1,26 @@
+# Java
+java/.gradle/
+java/build/
+java/bin/
+java/out/
+*.class
+
+# Go
+go/bin/
+
+# Python
+python/__pycache__/
+python/problems/**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
