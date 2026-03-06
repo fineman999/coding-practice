@@ -178,7 +178,7 @@ func TestSolve(t *testing.T) {
 		})
 	}
 }
-
+// 가장 연산량이 많은 최악의 케이스(큰 입력)"
 func BenchmarkSolve(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Solve()
