@@ -46,3 +46,22 @@ class TestSolve:
         expected = [50] * 50
 
         assert solve(array, commands) == expected
+
+    # ---------------------------------------------------------
+    # 🚀 벤치마크 테스트 (Go의 BenchmarkSolve, Java의 JMH 역할)
+    # ---------------------------------------------------------
+    def test_large_input_benchmark(self, benchmark):
+        """큰 입력에 대한 성능 측정"""
+
+        # 1. 벤치마크 준비 (Go의 셋업, Java의 @Setup 역할)
+        array = list(range(100, 0, -1))
+        commands = [[1, 100, 50] for _ in range(50)]
+        expected = [50] * 50
+
+        # 2. 측정 시작! (이 한 줄이 핵심입니다)
+        # benchmark(실행할함수, 인자1, 인자2, ...) 형태로 호출하면
+        # 알아서 수천 번 반복 실행하며 시간을 측정하고 결과를 반환합니다.
+        result = benchmark(solve, array, commands)
+
+        # 3. 측정된 결과가 맞는지 검증까지 한 번에 처리
+        assert result == expected

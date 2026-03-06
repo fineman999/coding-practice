@@ -17,6 +17,7 @@ algorithm-practice/
 │       └── boj1234/SolutionTest.java
 ├── go/
 │   ├── go.mod
+│   ├── testutils/helper.go  ← 공통 테스트 헬퍼 (배열/커맨드 생성)
 │   └── problems/
 │       └── boj1234/
 │           ├── solution.go
@@ -67,25 +68,30 @@ cd go
 go test ./problems/...
 # 특정 문제 테스트
 go test ./problems/boj1234/
-# 벤치마크
-go test -bench=. ./problems/boj1234/
+# 벤치마크 (메모리 할당 포함)
+go test -bench=. -benchmem ./problems/boj1234/
 ```
 
-### Python (pytest)
+### Python (pytest + pytest-benchmark)
 ```bash
 cd python
 # 전체 테스트
-pytest
+python3 -m pytest
 # 특정 문제 테스트
-pytest problems/boj1234/
-# verbose
-pytest -v problems/boj1234/
+python3 -m pytest problems/boj1234/ -v
+# 벤치마크만 실행
+python3 -m pytest problems/boj1234/ -v -k benchmark
+# 벤치마크 결과 저장
+python3 -m pytest problems/boj1234/ --benchmark-json=result.json
 ```
+
+> **의존성 설치**: `pip3 install pytest pytest-benchmark`
 
 ## 코드 작성 규칙
 
 ### 공통
 - 모든 풀이는 `Solution` 클래스 또는 함수로 작성
+- 함수명은 **`solution`** (프로그래머스 스타일 통일)
 - 테스트 케이스는 최소 3개 이상 (기본, 엣지, 큰 입력)
 - 시간/공간 복잡도를 주석으로 명시
 
@@ -94,19 +100,30 @@ pytest -v problems/boj1234/
 - 패키지: `problems.{문제ID}`
 - 클래스명: `Solution` (풀이), `SolutionTest` (테스트)
 - JUnit 5 + AssertJ 사용
+- primitive 배열 선호 (`int[]` > `List<Integer>`): boxing 오버헤드 없음
+  - 슬라이싱: `Arrays.copyOfRange(array, start, end)`
+  - 정렬: `Arrays.sort(sub)` (dual-pivot quicksort, primitive 특화)
 
 ### Go
 - Go 1.21+ 기준
 - 패키지: `{문제ID}`
-- 함수명: `Solve` 또는 문제에 맞는 이름 (exported)
-- 표준 `testing` 패키지 사용
-- 벤치마크 테스트 포함 권장
+- 함수명: `Solution` (exported)
+- 표준 `testing` 패키지 사용, 벤치마크(`BenchmarkXxx`) 필수 포함
+- 공통 테스트 데이터 생성은 `go/testutils/helper.go` 활용
+  - `testutils.GenerateDescendingArray(n)` — 역순 배열
+  - `testutils.GenerateCommands(m, i, j, k)` — 반복 커맨드
+  - `testutils.GenerateExpectedAnswer(m, val)` — 반복 정답
 
 ### Python
 - Python 3.11+ 기준
-- 함수명: `solve` 또는 문제에 맞는 이름
-- pytest 사용
-- type hint 권장
+- 함수명: `solution` (type hint 필수)
+- `pytest` + `pytest-benchmark` 사용
+- 벤치마크는 `test_large_input_benchmark(self, benchmark)` 패턴 사용
+  ```python
+  def test_large_input_benchmark(self, benchmark):
+      result = benchmark(solution, array, commands)
+      assert result == expected
+  ```
 
 ## Claude Code 작업 시 주의사항
 1. 새 문제를 추가할 때는 반드시 `./scripts/new_problem.sh`를 사용할 것

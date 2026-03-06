@@ -73,7 +73,7 @@ package problems.${PROBLEM_ID};
  */
 public class Solution {
 
-    public int solve() {
+    public int solution() {
         throw new UnsupportedOperationException("풀이를 작성하세요");
     }
 }
@@ -97,7 +97,7 @@ class SolutionTest {
         // given
 
         // when
-        int result = solution.solve();
+        int result = solution.solution();
 
         // then
         assertThat(result).isEqualTo(0);
@@ -140,7 +140,7 @@ cat > "${GO_DIR}/solution.go" << GO_EOF
 // 공간복잡도: O(?)
 package ${PROBLEM_ID}
 
-func Solve() int {
+func Solution() int {
 	panic("not implemented")
 }
 GO_EOF
@@ -150,7 +150,7 @@ package ${PROBLEM_ID}
 
 import "testing"
 
-func TestSolve(t *testing.T) {
+func TestSolution(t *testing.T) {
 	tests := []struct {
 		name string
 		want int
@@ -171,17 +171,17 @@ func TestSolve(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := Solve()
+			got := Solution()
 			if got != tt.want {
-				t.Errorf("Solve() = %v, want %v", got, tt.want)
+				t.Errorf("Solution() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 // 가장 연산량이 많은 최악의 케이스(큰 입력)"
-func BenchmarkSolve(b *testing.B) {
+func BenchmarkSolution(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Solve()
+		Solution()
 	}
 }
 GO_TEST_EOF
@@ -206,21 +206,21 @@ ${URL}
 """
 
 
-def solve() -> int:
+def solution() -> int:
     raise NotImplementedError("풀이를 작성하세요")
 PY_EOF
 
 cat > "${PY_DIR}/test_solution.py" << PY_TEST_EOF
 import pytest
-from .solution import solve
+from .solution import solution
 
 
-class TestSolve:
+class TestSolution:
     """[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}"""
 
     def test_basic(self):
         """기본 케이스"""
-        assert solve() == 0
+        assert solution() == 0
 
     def test_edge(self):
         """엣지 케이스"""
