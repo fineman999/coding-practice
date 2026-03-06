@@ -53,7 +53,8 @@ if [ -d "$JAVA_DIR" ] || [ -d "$GO_DIR" ] || [ -d "$PY_DIR" ]; then
     exit 1
 fi
 
-echo "📝 새 문제 생성: [${SOURCE^^}][${NUMBER}] ${TITLE}"
+SOURCE_UPPER=$(echo "$SOURCE" | tr '[:lower:]' '[:upper:]')
+echo "📝 새 문제 생성: [${SOURCE_UPPER}][${NUMBER}] ${TITLE}"
 
 # ─── Java ───────────────────────────────────────────────
 mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
@@ -62,7 +63,7 @@ cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
 package problems.${PROBLEM_ID};
 
 /**
- * [${SOURCE^^}] ${NUMBER} - ${TITLE}
+ * [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
  * ${URL}
  * 난이도: ${DIFFICULTY}
  * 태그: ${TAGS}
@@ -86,7 +87,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("[${SOURCE^^}] ${NUMBER} - ${TITLE}")
+@DisplayName("[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}")
 class SolutionTest {
 
     private final Solution solution = new Solution();
@@ -131,7 +132,7 @@ echo "  ✅ Java 템플릿 생성 완료"
 mkdir -p "$GO_DIR"
 
 cat > "${GO_DIR}/solution.go" << GO_EOF
-// Package ${PROBLEM_ID} - [${SOURCE^^}] ${NUMBER} - ${TITLE}
+// Package ${PROBLEM_ID} - [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
 // ${URL}
 // 난이도: ${DIFFICULTY}
 // 태그: ${TAGS}
@@ -197,7 +198,7 @@ INIT_EOF
 
 cat > "${PY_DIR}/solution.py" << PY_EOF
 """
-[${SOURCE^^}] ${NUMBER} - ${TITLE}
+[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
 ${URL}
 난이도: ${DIFFICULTY}
 태그: ${TAGS}
@@ -218,7 +219,7 @@ from .solution import solve
 
 
 class TestSolve:
-    """[${SOURCE^^}] ${NUMBER} - ${TITLE}"""
+    """[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}"""
 
     def test_basic(self):
         """기본 케이스"""
