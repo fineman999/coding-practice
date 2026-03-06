@@ -13,8 +13,10 @@ algorithm-practice/
 │   ├── build.gradle
 │   ├── src/main/java/problems/
 │   │   └── boj1234/Solution.java
-│   └── src/test/java/problems/
-│       └── boj1234/SolutionTest.java
+│   ├── src/test/java/problems/
+│   │   └── boj1234/SolutionTest.java
+│   └── src/jmh/java/problems/
+│       └── boj1234/SolutionBenchmark.java
 ├── go/
 │   ├── go.mod
 │   ├── testutils/helper.go  ← 공통 테스트 헬퍼 (배열/커맨드 생성)
@@ -61,6 +63,23 @@ cd java
 ./gradlew test --tests "problems.boj1234.SolutionTest"
 ```
 
+### Java 벤치마크 (JMH)
+```bash
+cd java
+# 방법 1: Gradle로 직접 실행 (가장 간단)
+./gradlew jmh
+
+# 방법 2: fat JAR로 실행 (실무 스타일)
+./gradlew jmhJar
+java -jar build/libs/benchmarks.jar
+
+# 특정 벤치마크만
+java -jar build/libs/benchmarks.jar "SolutionBenchmark"
+
+# 옵션 오버라이드 (fork 1회, warmup 2회, 측정 3회, 단위 ns)
+java -jar build/libs/benchmarks.jar -f 1 -wi 2 -i 3 -tu ns
+```
+
 ### Go
 ```bash
 cd go
@@ -98,8 +117,9 @@ python3 -m pytest problems/boj1234/ --benchmark-json=result.json
 ### Java
 - JDK 17+ 기준
 - 패키지: `problems.{문제ID}`
-- 클래스명: `Solution` (풀이), `SolutionTest` (테스트)
+- 클래스명: `Solution` (풀이), `SolutionTest` (테스트), `SolutionBenchmark` (JMH 벤치마크)
 - JUnit 5 + AssertJ 사용
+- 벤치마크는 `src/jmh/java/problems/{문제ID}/SolutionBenchmark.java`에 작성 (main 소스셋에 접근 가능)
 - primitive 배열 선호 (`int[]` > `List<Integer>`): boxing 오버헤드 없음
   - 슬라이싱: `Arrays.copyOfRange(array, start, end)`
   - 정렬: `Arrays.sort(sub)` (dual-pivot quicksort, primitive 특화)
