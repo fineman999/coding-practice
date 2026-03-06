@@ -8,18 +8,32 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 README="${ROOT}/README.md"
 
-# ─── 언어별 풀이 상태 확인 ──────────────────────────────
+# ─── 언어별 풀이 상태 확인 (테스트 통과 여부) ──────────────────
 check_lang() {
     local problem_id="$1"
-    local java_exists="❌"
-    local go_exists="❌"
-    local python_exists="❌"
+    local java_status="❌"
+    local go_status="❌"
+    local python_status="❌"
 
-    [ -f "${ROOT}/java/src/main/java/problems/${problem_id}/Solution.java" ] && java_exists="✅"
-    [ -f "${ROOT}/go/problems/${problem_id}/solution.go" ] && go_exists="✅"
-    [ -f "${ROOT}/python/problems/${problem_id}/solution.py" ] && python_exists="✅"
+    if [ -f "${ROOT}/java/src/main/java/problems/${problem_id}/Solution.java" ]; then
+        if (cd "${ROOT}/java" && ./gradlew test --tests "problems.${problem_id}.SolutionTest" -q >/dev/null 2>&1); then
+            java_status="✅"
+        fi
+    fi
 
-    echo "${java_exists}|${go_exists}|${python_exists}"
+    if [ -f "${ROOT}/go/problems/${problem_id}/solution.go" ]; then
+        if (cd "${ROOT}/go" && go test "./problems/${problem_id}/" >/dev/null 2>&1); then
+            go_status="✅"
+        fi
+    fi
+
+    if [ -f "${ROOT}/python/problems/${problem_id}/solution.py" ]; then
+        if (cd "${ROOT}/python" && python3 -m pytest "problems/${problem_id}/" -q >/dev/null 2>&1); then
+            python_status="✅"
+        fi
+    fi
+
+    echo "${java_status}|${go_status}|${python_status}"
 }
 
 # ─── 문제 목록 수집 (Go 디렉토리 기준) ────────────────────

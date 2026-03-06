@@ -10,5 +10,4 @@ https://programmers.co.kr/learn/courses/30/lessons/42748
 
 
 def solve() -> int:
-    # TODO: 풀이 작성
-    return 0
+    raise NotImplementedError("풀이를 작성하세요")

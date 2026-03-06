@@ -12,7 +12,6 @@ package problems.pg42748;
 public class Solution {
 
     public int solve() {
-        // TODO: 풀이 작성
-        return 0;
+        throw new UnsupportedOperationException("풀이를 작성하세요");
     }
 }

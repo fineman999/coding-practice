@@ -8,6 +8,5 @@
 package pg42748
 
 func Solve() int {
-	// TODO: 풀이 작성
-	return 0
+	panic("not implemented")
 }

@@ -74,8 +74,7 @@ package problems.${PROBLEM_ID};
 public class Solution {
 
     public int solve() {
-        // TODO: 풀이 작성
-        return 0;
+        throw new UnsupportedOperationException("풀이를 작성하세요");
     }
 }
 JAVA_EOF
@@ -142,8 +141,7 @@ cat > "${GO_DIR}/solution.go" << GO_EOF
 package ${PROBLEM_ID}
 
 func Solve() int {
-	// TODO: 풀이 작성
-	return 0
+	panic("not implemented")
 }
 GO_EOF
 
@@ -209,8 +207,7 @@ ${URL}
 
 
 def solve() -> int:
-    # TODO: 풀이 작성
-    return 0
+    raise NotImplementedError("풀이를 작성하세요")
 PY_EOF
 
 cat > "${PY_DIR}/test_solution.py" << PY_TEST_EOF
