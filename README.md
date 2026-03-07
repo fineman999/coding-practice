@@ -6,13 +6,14 @@
 
 | 총 문제 수 |
 |:---:|
-| **1** |
+| **2** |
 
 ## 📋 문제 목록
 
 | # | 출처 | 번호 | 문제 | 난이도 | Java | Go | Python | 태그 |
 |---|------|------|------|--------|------|----|--------|------|
 | 1 | PG | [42748](https://programmers.co.kr/learn/courses/30/lessons/42748) | [PG] 42748 - k번째수 | lv1 | ✅ | ✅ | ✅ | sort,array |
+| 2 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ❌ | ❌ | ❌ | search |
 
 ## 🚀 시작하기
 
