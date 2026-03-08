@@ -42,6 +42,7 @@ esac
 JAVA_PACKAGE="problems.${PROBLEM_ID}"
 JAVA_DIR="${ROOT}/java/src/main/java/problems/${PROBLEM_ID}"
 JAVA_TEST_DIR="${ROOT}/java/src/test/java/problems/${PROBLEM_ID}"
+JAVA_JMH_DIR="${ROOT}/java/src/jmh/java/problems/${PROBLEM_ID}"
 
 # Go / Python 경로
 GO_DIR="${ROOT}/go/problems/${PROBLEM_ID}"
@@ -57,7 +58,7 @@ SOURCE_UPPER=$(echo "$SOURCE" | tr '[:lower:]' '[:upper:]')
 echo "📝 새 문제 생성: [${SOURCE_UPPER}][${NUMBER}] ${TITLE}"
 
 # ─── Java ───────────────────────────────────────────────
-mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
+mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR" "$JAVA_JMH_DIR"
 
 cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
 package problems.${PROBLEM_ID};
@@ -124,6 +125,42 @@ class SolutionTest {
     }
 }
 JAVA_TEST_EOF
+
+cat > "${JAVA_JMH_DIR}/SolutionBenchmark.java" << JAVA_JMH_EOF
+package problems.${PROBLEM_ID};
+
+import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+
+import java.util.concurrent.TimeUnit;
+
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@State(Scope.Thread)
+@Fork(1)
+@Warmup(iterations = 3, time = 1)
+@Measurement(iterations = 5, time = 1)
+public class SolutionBenchmark {
+
+    @Benchmark
+    public int testSolution() {
+        Solution solution = new Solution();
+        // 벤치마크할 로직을 여기에 작성 (예: 프로그래머스 입력값 세팅)
+        return solution.solution();
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(SolutionBenchmark.class.getSimpleName())
+                .build();
+
+        new Runner(opt).run();
+    }
+}
+JAVA_JMH_EOF
 
 echo "  ✅ Java 템플릿 생성 완료"
 
