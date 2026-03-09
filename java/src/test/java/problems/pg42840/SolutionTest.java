@@ -22,7 +22,7 @@ class SolutionTest {
         }
     }
 
-    @ParameterizedTest(name = "[[index}] {0}")
+    @ParameterizedTest(name = "[{index}] {0}")
     @DisplayName("기본 케이스")
     @MethodSource("provideAnswers")
     void testBasic(TestCase tc) {
