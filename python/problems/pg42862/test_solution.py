@@ -5,14 +5,42 @@ from .solution import solution
 class TestSolution:
     """[PG] 42862 - 체육복"""
 
-    def test_basic(self):
+    @pytest.mark.parametrize(
+        "n, lost, reserve, expected",
+        [
+            (
+                5,
+                [2, 4],
+                [1, 3, 5],
+                5
+            ),
+            (
+                5,
+                [2, 4],
+                [3],
+                4
+            ),
+            (
+                3,
+                [3],
+                [1],
+                2
+            )
+        ]
+    )
+    def test_basic(self, n, lost, reserve, expected):
         """기본 케이스"""
-        assert solution() == 0
+        assert solution(n, lost, reserve) == expected
 
-    def test_edge(self):
-        """엣지 케이스"""
-        pass
 
-    def test_large_input(self):
+    def test_large_input(self, benchmark):
         """큰 입력"""
-        pass
+
+        n = 30
+        lost = [x for x in range(n) if x%2==0]
+        reserve = [x for x in range(n) if x%2==1]
+        expected = 30
+
+        result = benchmark(solution, n, lost, reserve)
+
+        assert result == expected
