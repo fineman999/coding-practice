@@ -6,16 +6,17 @@
 
 | 총 문제 수 |
 |:---:|
-| **4** |
+| **5** |
 
 ## 📋 문제 목록
 
 | # | 출처 | 번호 | 문제 | 난이도 | Java | Go | Python | 태그 |
-|---|------|------|------|--------|------|----|--------|------|
-| 1 | PG | [42748](https://programmers.co.kr/learn/courses/30/lessons/42748) | [PG] 42748 - k번째수 | lv1 | ✅ | ✅ | ✅ | sort,array |
-| 2 | PG | [42840](https://programmers.co.kr/learn/courses/30/lessons/42840) | [PG] 42840 - 모의고사 | lv1 | ✅ | ✅ | ✅ | sort |
-| 3 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ❌ | ❌ | ❌ | greedy |
-| 4 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
+|---|------|------|------|-----|------|----|--------|------|
+| 1 | PG | [42577](https://programmers.co.kr/learn/courses/30/lessons/42577) | [PG] 42577 - 전화번호 목록 | lv2 | ❌ | ❌ | ❌ | hash |
+| 2 | PG | [42748](https://programmers.co.kr/learn/courses/30/lessons/42748) | [PG] 42748 - k번째수 | lv1 | ✅ | ✅ | ✅ | sort,array |
+| 3 | PG | [42840](https://programmers.co.kr/learn/courses/30/lessons/42840) | [PG] 42840 - 모의고사 | lv1 | ✅ | ✅ | ✅ | sort |
+| 4 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ✅ | greedy |
+| 5 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
 
 ## 🚀 시작하기
 
