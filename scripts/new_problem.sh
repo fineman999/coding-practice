@@ -48,6 +48,9 @@ JAVA_JMH_DIR="${ROOT}/java/src/jmh/java/problems/${PROBLEM_ID}"
 GO_DIR="${ROOT}/go/problems/${PROBLEM_ID}"
 PY_DIR="${ROOT}/python/problems/${PROBLEM_ID}"
 
+# Docs 경로
+DOCS_DIR="${ROOT}/docs/markdown"
+
 # 이미 존재하는지 확인
 if [ -d "$JAVA_DIR" ] || [ -d "$GO_DIR" ] || [ -d "$PY_DIR" ]; then
     echo "❌ 이미 존재하는 문제입니다: ${PROBLEM_ID}"
@@ -269,6 +272,15 @@ class TestSolution:
 PY_TEST_EOF
 
 echo "  ✅ Python 템플릿 생성 완료"
+
+
+# ─── Docs ─────────────────────────────────────────────
+mkdir -p "DOCS_DIR"
+
+cat > "${DOCS_DIR}/TIL_${PROBLEM_ID}.md" << 'DOCS_EOF'
+# 📝 TIL (Today I Learned) - 알고리즘 문제 풀이 복습
+DOCS_EOF
+
 
 # ─── README 업데이트 ────────────────────────────────────
 "${ROOT}/scripts/update_readme.sh"
