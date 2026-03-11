@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * [PG] 42578 - 의상 https://programmers.co.kr/learn/courses/30/lessons/42578 난이도: lv2 태그: hash
  *
- * <p>시간복잡도: O(?) 공간복잡도: O(?)
+ * <p>시간복잡도: O(n) 공간복잡도: O(n)
  */
 public class Solution {
 
