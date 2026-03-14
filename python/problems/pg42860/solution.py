@@ -17,9 +17,7 @@ def solution(name: str) -> int:
 
 def find_min_count(name: str):
     n = len(name)
-    count = 0
-    for i in range(n):
-        count += min(ord(name[i]) - ord('A'), ord('Z') + 1 - ord(name[i]))
+    count = sum(min(ord(name[i]) - ord('A'), ord('Z') + 1 - ord(name[i])) for i in range(n))
 
     min_move = n - 1  # 오른쪽만 이동할 때
     for i in range(n):
@@ -28,8 +26,6 @@ def find_min_count(name: str):
         while next_idx < n and name[next_idx] == 'A':
             next_idx += 1
         # 되돌아가기, 앞뒤점프 모두 시뮬
-        min_move = min(min_move, 2*i + n - next_idx)
-        # 반대쪽 방향도 비교
-        min_move = min(min_move, i + 2*(n - next_idx))
+        min_move = min(min_move, 2*i + n - next_idx, i + 2*(n - next_idx))
 
     return count + min_move
