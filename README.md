@@ -6,7 +6,7 @@
 
 | 총 문제 수 |
 |:---:|
-| **10** |
+| **11** |
 
 ## 📋 문제 목록
 
@@ -18,10 +18,11 @@
 | 4 | PG | [42626](https://programmers.co.kr/learn/courses/30/lessons/42626) | [PG] 42626 - 더 맵게 | lv2 | ✅ | ✅ | ✅ | heap |
 | 5 | PG | [42746](https://programmers.co.kr/learn/courses/30/lessons/42746) | [PG] 42746 - 가장 큰 수 | lv2 | ✅ | ✅ | ✅ | sort |
 | 6 | PG | [42748](https://programmers.co.kr/learn/courses/30/lessons/42748) | [PG] 42748 - k번째수 | lv1 | ✅ | ✅ | ✅ | sort,array |
-| 7 | PG | [42839](https://programmers.co.kr/learn/courses/30/lessons/42839) | [PG] 42839 - 소수 찾기 | lv2 | ❌ | ❌ | ❌ | search |
+| 7 | PG | [42839](https://programmers.co.kr/learn/courses/30/lessons/42839) | [PG] 42839 - 소수 찾기 | lv2 | ❌ | ✅ | ✅ | search |
 | 8 | PG | [42840](https://programmers.co.kr/learn/courses/30/lessons/42840) | [PG] 42840 - 모의고사 | lv1 | ✅ | ✅ | ✅ | sort |
-| 9 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ✅ | greedy |
-| 10 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
+| 9 | PG | [42860](https://programmers.co.kr/learn/courses/30/lessons/42860) | [PG] 42860 - 조이스틱 | lv2 | ❌ | ❌ | ❌ | greedy |
+| 10 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ✅ | greedy |
+| 11 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
 
 ## 🚀 시작하기
 
