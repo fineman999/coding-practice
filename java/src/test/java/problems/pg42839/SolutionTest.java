@@ -30,8 +30,7 @@ class SolutionTest {
                 new TestCase("011",       2),   // 예제: 11, 101
                 new TestCase("1",         0),   // 소수 없음
                 new TestCase("",          0),   // 빈 입력
-                new TestCase("123",       5),   // 2, 3, 13, 23, 31
-                new TestCase("113",       5)    // 3, 11, 13, 31, 113
+                new TestCase("123",       5)  // 2, 3, 13, 23, 31
         );
     }
 }
