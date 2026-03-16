@@ -16,11 +16,30 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 5, time = 1)
 public class SolutionBenchmark {
 
+    private Solution solution;
+    private int[] priorities;
+    private int location;
+
+    @Setup
+    public void setUp() {
+        solution = new Solution();
+
+        // 벤치마크용 입력값 셋팅
+        // 예: [2, 1, 3, 2], location=2 (문제 기본 예시)
+        // priorities = new int[]{2, 1, 3, 2};
+        // location = 2;
+
+        // 더 큰 입력 (ex: priorities 배열이 100, 랜덤, 최대값 등)
+        priorities = new int[100];
+        for (int i = 0; i < priorities.length; i++) {
+            priorities[i] = (i % 9) + 1;
+        }
+        location = 99;
+    }
+
     @Benchmark
     public int testSolution() {
-        Solution solution = new Solution();
-        // 벤치마크할 로직을 여기에 작성 (예: 프로그래머스 입력값 세팅)
-        return solution.solution();
+        return solution.solution(priorities, location);
     }
 
     public static void main(String[] args) throws RunnerException {
