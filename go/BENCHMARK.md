@@ -1,7 +1,7 @@
 ### 📊 Go (Golang) 벤치마크 결과표 분석 가이드 (`-benchmem`)
 
 Go의 벤치마크는 파이썬처럼 복잡한 통계를 보여주지 않는 대신, 실무 서버 최적화의 핵심인 **"실행 속도"**와 **"메모리 할당량(GC 부하)"**을 아주 직관적으로 보여줍니다.
-
+`go test -bench=BenchmarkSolution -benchmem`
 #### 1. 실행 환경 정보 (Environment)
 ```text
 goos: darwin              # 운영체제 (macOS)
