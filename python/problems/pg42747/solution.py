@@ -4,7 +4,7 @@ https://programmers.co.kr/learn/courses/30/lessons/42747
 난이도: lv2
 태그: sort
 
-시간복잡도: O(N)
+시간복잡도: O(N Log N)
 공간복잡도: O(N)
 """
 from collections import deque
