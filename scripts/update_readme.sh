@@ -7,6 +7,26 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 README="${ROOT}/README.md"
+PYTHON_BIN="python3"
+PYTHON_TEST_RUNNER_STATUS="ready"
+PYTHON_TEST_RUNNER_NOTE=""
+
+if [ -x "${ROOT}/python/.venv/bin/python" ]; then
+    PYTHON_BIN="${ROOT}/python/.venv/bin/python"
+elif [ -x "${ROOT}/.venv/bin/python" ]; then
+    PYTHON_BIN="${ROOT}/.venv/bin/python"
+fi
+
+if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1 && [ ! -x "${PYTHON_BIN}" ]; then
+    PYTHON_TEST_RUNNER_STATUS="missing-python"
+    PYTHON_TEST_RUNNER_NOTE="python3 가 없어 Python 테스트 판정을 건너뜁니다."
+elif ! "${PYTHON_BIN}" -c "import pytest" >/dev/null 2>&1; then
+    PYTHON_TEST_RUNNER_STATUS="missing-pytest"
+    PYTHON_TEST_RUNNER_NOTE="${PYTHON_BIN} 환경에 pytest 가 없어 Python 테스트 판정을 건너뜁니다."
+elif ! "${PYTHON_BIN}" -c "import pytest_benchmark" >/dev/null 2>&1; then
+    PYTHON_TEST_RUNNER_STATUS="missing-pytest-benchmark"
+    PYTHON_TEST_RUNNER_NOTE="${PYTHON_BIN} 환경에 pytest-benchmark 가 없어 Python 테스트 판정을 건너뜁니다."
+fi
 
 # ─── 언어별 풀이 상태 확인 (테스트 통과 여부) ──────────────────
 check_lang() {
@@ -28,9 +48,16 @@ check_lang() {
     fi
 
     if [ -f "${ROOT}/python/problems/${problem_id}/solution.py" ]; then
-        if (cd "${ROOT}/python" && python3 -m pytest "problems/${problem_id}/" -q >/dev/null 2>&1); then
-            python_status="✅"
-        fi
+        case "${PYTHON_TEST_RUNNER_STATUS}" in
+            ready)
+                if (cd "${ROOT}/python" && "${PYTHON_BIN}" -m pytest "problems/${problem_id}/" -q >/dev/null 2>&1); then
+                    python_status="✅"
+                fi
+                ;;
+            *)
+                python_status="⚠️"
+                ;;
+        esac
     fi
 
     echo "${java_status}|${go_status}|${python_status}"
@@ -140,3 +167,8 @@ cd python && pytest                          # Python
 FOOTER
 
 echo "  📄 README.md 업데이트 완료 (총 ${total}문제)"
+
+if [ "${PYTHON_TEST_RUNNER_STATUS}" != "ready" ]; then
+    echo "  ⚠️  ${PYTHON_TEST_RUNNER_NOTE}"
+    echo "     권장: python3 -m venv python/.venv && python/.venv/bin/python -m pip install pytest pytest-benchmark"
+fi

@@ -275,7 +275,7 @@ echo "  ✅ Python 템플릿 생성 완료"
 
 
 # ─── Docs ─────────────────────────────────────────────
-mkdir -p "DOCS_DIR"
+mkdir -p "${DOCS_DIR}"
 
 cat > "${DOCS_DIR}/TIL_${PROBLEM_ID}.md" << 'DOCS_EOF'
 # 📝 TIL (Today I Learned) - 알고리즘 문제 풀이 복습
