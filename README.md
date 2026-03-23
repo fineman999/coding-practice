@@ -6,7 +6,7 @@
 
 | 총 문제 수 |
 |:---:|
-| **17** |
+| **18** |
 
 ## 📋 문제 목록
 
@@ -24,11 +24,12 @@
 | 10 | PG | [42748](https://programmers.co.kr/learn/courses/30/lessons/42748) | [PG] 42748 - k번째수 | lv1 | ✅ | ✅ | ❌ | sort,array |
 | 11 | PG | [42839](https://programmers.co.kr/learn/courses/30/lessons/42839) | [PG] 42839 - 소수 찾기 | lv2 | ✅ | ✅ | ❌ | search |
 | 12 | PG | [42840](https://programmers.co.kr/learn/courses/30/lessons/42840) | [PG] 42840 - 모의고사 | lv1 | ✅ | ✅ | ❌ | sort |
-| 13 | PG | [42842](https://programmers.co.kr/learn/courses/30/lessons/42842) | [PG] 42842 - 완전탐색 | lv2 | ❌ | ❌ | ❌ | search |
+| 13 | PG | [42842](https://programmers.co.kr/learn/courses/30/lessons/42842) | [PG] 42842 - 완전탐색 | lv2 | ✅ | ✅ | ❌ | search |
 | 14 | PG | [42860](https://programmers.co.kr/learn/courses/30/lessons/42860) | [PG] 42860 - 조이스틱 | lv2 | ✅ | ✅ | ❌ | greedy |
 | 15 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ❌ | greedy |
 | 16 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ❌ | dfs,bfs |
 | 17 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ❌ | search |
+| 18 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ❌ | ❌ | ❌ | search |
 
 ## 🚀 시작하기
 
