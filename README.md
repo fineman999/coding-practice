@@ -6,7 +6,7 @@
 
 | 총 문제 수 |
 |:---:|
-| **18** |
+| **19** |
 
 ## 📋 문제 목록
 
@@ -29,7 +29,8 @@
 | 15 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ✅ | greedy |
 | 16 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ✅ | dfs,bfs |
 | 17 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
-| 18 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
+| 18 | PG | [86971](https://programmers.co.kr/learn/courses/30/lessons/86971) | [PG] 86971 - 전력망을 둘로 나누기 | lv2 | ❌ | ❌ | ❌ | search |
+| 19 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
 
 ## 🚀 시작하기
 

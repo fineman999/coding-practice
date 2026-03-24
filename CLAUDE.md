@@ -1,153 +1,1 @@
-# Algorithm Practice - 코딩 테스트 준비 프로젝트
-
-## 프로젝트 개요
-백엔드 개발자의 코딩 테스트 준비용 멀티 언어(Java, Go, Python) 알고리즘 풀이 저장소.
-모든 문제는 Java, Go, Python 세 언어로 풀이하며, 각 풀이에는 반드시 테스트 코드가 포함된다.
-
-## 프로젝트 구조 (언어 중심)
-```
-algorithm-practice/
-├── CLAUDE.md
-├── README.md              ← 문제 중심 인덱스 (자동 생성)
-├── java/
-│   ├── build.gradle
-│   ├── src/main/java/problems/
-│   │   └── boj1234/Solution.java
-│   ├── src/test/java/problems/
-│   │   └── boj1234/SolutionTest.java
-│   └── src/jmh/java/problems/
-│       └── boj1234/SolutionBenchmark.java
-├── go/
-│   ├── go.mod
-│   ├── testutils/helper.go  ← 공통 테스트 헬퍼 (배열/커맨드 생성)
-│   └── problems/
-│       └── boj1234/
-│           ├── solution.go
-│           └── solution_test.go
-├── python/
-│   ├── pyproject.toml
-│   └── problems/
-│       └── boj1234/
-│           ├── solution.py
-│           └── test_solution.py
-└── scripts/
-    └── new_problem.sh     ← 문제 템플릿 자동 생성
-```
-
-## 명명 규칙
-- 문제 디렉토리: `{출처}{번호}` (소문자, 언더스코어 없음)
-    - 백준: `boj1234`
-    - 프로그래머스: `pg42586`
-    - LeetCode: `lc1`
-- Java 패키지: `problems.boj1234`
-- Go 패키지: `boj1234`
-- Python 모듈: `problems/boj1234/`
-
-## 새 문제 추가 방법
-```bash
-./scripts/new_problem.sh <출처> <번호> <문제이름> [난이도] [태그]
-# 예시:
-./scripts/new_problem.sh boj 1234 "두 포인터" gold3 "two-pointer,sliding-window"
-./scripts/new_problem.sh pg 42586 "기능개발" lv2 "queue,stack"
-./scripts/new_problem.sh lc 1 "Two Sum" easy "hash-map,array"
-```
-
-## 테스트 실행 방법
-
-### Java (Gradle + JUnit 5)
-```bash
-cd java
-# 전체 테스트
-./gradlew test
-# 특정 문제 테스트
-./gradlew test --tests "problems.boj1234.SolutionTest"
-```
-
-### Java 벤치마크 (JMH)
-```bash
-cd java
-# 방법 1: Gradle로 직접 실행 (가장 간단)
-./gradlew jmh
-
-# 방법 2: fat JAR로 실행 (실무 스타일)
-./gradlew jmhJar
-java -jar build/libs/benchmarks.jar
-
-# 특정 벤치마크만
-java -jar build/libs/benchmarks.jar "SolutionBenchmark"
-
-# 옵션 오버라이드 (fork 1회, warmup 2회, 측정 3회, 단위 ns)
-java -jar build/libs/benchmarks.jar -f 1 -wi 2 -i 3 -tu ns
-```
-
-### Go
-```bash
-cd go
-# 전체 테스트
-go test ./problems/...
-# 특정 문제 테스트
-go test ./problems/boj1234/
-# 벤치마크 (메모리 할당 포함)
-go test -bench=. -benchmem ./problems/boj1234/
-```
-
-### Python (pytest + pytest-benchmark)
-```bash
-cd python
-# 전체 테스트
-python3 -m pytest
-# 특정 문제 테스트
-python3 -m pytest problems/boj1234/ -v
-# 벤치마크만 실행
-python3 -m pytest problems/boj1234/ -v -k benchmark
-# 벤치마크 결과 저장
-python3 -m pytest problems/boj1234/ --benchmark-json=result.json
-```
-
-> **의존성 설치**: `pip3 install pytest pytest-benchmark`
-
-## 코드 작성 규칙
-
-### 공통
-- 모든 풀이는 `Solution` 클래스 또는 함수로 작성
-- 함수명은 **`solution`** (프로그래머스 스타일 통일)
-- 테스트 케이스는 최소 3개 이상 (기본, 엣지, 큰 입력)
-- 시간/공간 복잡도를 주석으로 명시
-
-### Java
-- JDK 17+ 기준
-- 패키지: `problems.{문제ID}`
-- 클래스명: `Solution` (풀이), `SolutionTest` (테스트), `SolutionBenchmark` (JMH 벤치마크)
-- JUnit 5 + AssertJ 사용
-- 벤치마크는 `src/jmh/java/problems/{문제ID}/SolutionBenchmark.java`에 작성 (main 소스셋에 접근 가능)
-- primitive 배열 선호 (`int[]` > `List<Integer>`): boxing 오버헤드 없음
-  - 슬라이싱: `Arrays.copyOfRange(array, start, end)`
-  - 정렬: `Arrays.sort(sub)` (dual-pivot quicksort, primitive 특화)
-
-### Go
-- Go 1.21+ 기준
-- 패키지: `{문제ID}`
-- 함수명: `Solution` (exported)
-- 표준 `testing` 패키지 사용, 벤치마크(`BenchmarkXxx`) 필수 포함
-- 공통 테스트 데이터 생성은 `go/testutils/helper.go` 활용
-  - `testutils.GenerateDescendingArray(n)` — 역순 배열
-  - `testutils.GenerateCommands(m, i, j, k)` — 반복 커맨드
-  - `testutils.GenerateExpectedAnswer(m, val)` — 반복 정답
-
-### Python
-- Python 3.11+ 기준
-- 함수명: `solution` (type hint 필수)
-- `pytest` + `pytest-benchmark` 사용
-- 벤치마크는 `test_large_input_benchmark(self, benchmark)` 패턴 사용
-  ```python
-  def test_large_input_benchmark(self, benchmark):
-      result = benchmark(solution, array, commands)
-      assert result == expected
-  ```
-
-## Claude Code 작업 시 주의사항
-1. 새 문제를 추가할 때는 반드시 `./scripts/new_problem.sh`를 사용할 것
-2. 풀이 작성 후 테스트가 통과하는지 확인할 것
-3. README.md의 문제 인덱스를 업데이트할 것 (`./scripts/update_readme.sh`)
-4. 커밋 메시지 형식: `solve: [출처][번호] 문제이름 (언어)`
-    - 예: `solve: [BOJ][1234] 두 포인터 (java, go, python)`
+# Algorithm Practice - 코딩 테스트 준비 프로젝트## 프로젝트 개요백엔드 개발자의 코딩 테스트 준비용 멀티 언어(Java, Go, Python) 알고리즘 풀이 저장소.모든 문제는 Java, Go, Python 세 언어로 풀이하며, 각 풀이에는 반드시 테스트 코드가 포함된다.## 프로젝트 구조 (언어 중심)```algorithm-practice/├── CLAUDE.md├── README.md              ← 문제 중심 인덱스 (자동 생성)├── java/│   ├── build.gradle│   ├── src/main/java/problems/│   │   └── boj1234/Solution.java│   ├── src/test/java/problems/│   │   └── boj1234/SolutionTest.java│   └── src/jmh/java/problems/│       └── boj1234/SolutionBenchmark.java├── go/│   ├── go.mod│   ├── testutils/helper.go  ← 공통 테스트 헬퍼 (배열/커맨드 생성)│   └── problems/│       └── boj1234/│           ├── solution.go│           └── solution_test.go├── python/│   ├── pyproject.toml│   └── problems/│       └── boj1234/│           ├── solution.py│           └── test_solution.py└── scripts/    └── new_problem.sh     ← 문제 템플릿 자동 생성```## 명명 규칙- 문제 디렉토리: `{출처}{번호}` (소문자, 언더스코어 없음)    - 백준: `boj1234`    - 프로그래머스: `pg42586`    - LeetCode: `lc1`- Java 패키지: `problems.boj1234`- Go 패키지: `boj1234`- Python 모듈: `problems/boj1234/`## 새 문제 추가 방법```bash./scripts/new_problem.sh <출처> <번호> <문제이름> [난이도] [태그]# 예시:./scripts/new_problem.sh boj 1234 "두 포인터" gold3 "two-pointer,sliding-window"./scripts/new_problem.sh pg 42586 "기능개발" lv2 "queue,stack"./scripts/new_problem.sh lc 1 "Two Sum" easy "hash-map,array"```## 테스트 실행 방법### Java (Gradle + JUnit 5)```bashcd java# 전체 테스트./gradlew test# 특정 문제 테스트./gradlew test --tests "problems.boj1234.SolutionTest"```### Java 벤치마크 (JMH)```bashcd java# 방법 1: Gradle로 직접 실행 (가장 간단)./gradlew jmh# 방법 2: fat JAR로 실행 (실무 스타일)./gradlew jmhJarjava -jar build/libs/benchmarks.jar# 특정 벤치마크만java -jar build/libs/benchmarks.jar "SolutionBenchmark"# 옵션 오버라이드 (fork 1회, warmup 2회, 측정 3회, 단위 ns)java -jar build/libs/benchmarks.jar -f 1 -wi 2 -i 3 -tu ns```### Go```bashcd go# 전체 테스트go test ./problems/...# 특정 문제 테스트go test ./problems/boj1234/# 벤치마크 (메모리 할당 포함)go test -bench=. -benchmem ./problems/boj1234/```### Python (pytest + pytest-benchmark)```bashcd python# 전체 테스트python3 -m pytest# 특정 문제 테스트python3 -m pytest problems/boj1234/ -v# 벤치마크만 실행python3 -m pytest problems/boj1234/ -v -k benchmark# 벤치마크 결과 저장python3 -m pytest problems/boj1234/ --benchmark-json=result.json```> **의존성 설치**: `pip3 install pytest pytest-benchmark`## 코드 작성 규칙### 공통- 모든 풀이는 `Solution` 클래스 또는 함수로 작성- 함수명은 **`solution`** (프로그래머스 스타일 통일)- 테스트 케이스는 최소 3개 이상 (기본, 엣지, 큰 입력)- 시간/공간 복잡도를 주석으로 명시### Java- JDK 17+ 기준- 패키지: `problems.{문제ID}`- 클래스명: `Solution` (풀이), `SolutionTest` (테스트), `SolutionBenchmark` (JMH 벤치마크)- JUnit 5 + AssertJ 사용- 벤치마크는 `src/jmh/java/problems/{문제ID}/SolutionBenchmark.java`에 작성 (main 소스셋에 접근 가능)- primitive 배열 선호 (`int[]` > `List<Integer>`): boxing 오버헤드 없음  - 슬라이싱: `Arrays.copyOfRange(array, start, end)`  - 정렬: `Arrays.sort(sub)` (dual-pivot quicksort, primitive 특화)### Go- Go 1.21+ 기준- 패키지: `{문제ID}`- 함수명: `Solution` (exported)- 표준 `testing` 패키지 사용, 벤치마크(`BenchmarkXxx`) 필수 포함- 공통 테스트 데이터 생성은 `go/testutils/helper.go` 활용  - `testutils.GenerateDescendingArray(n)` — 역순 배열  - `testutils.GenerateCommands(m, i, j, k)` — 반복 커맨드  - `testutils.GenerateExpectedAnswer(m, val)` — 반복 정답### Python- Python 3.11+ 기준- 함수명: `solution` (type hint 필수)- `pytest` + `pytest-benchmark` 사용- 벤치마크는 `test_large_input_benchmark(self, benchmark)` 패턴 사용  ```python  def test_large_input_benchmark(self, benchmark):      result = benchmark(solution, array, commands)      assert result == expected  ```## Claude Code 작업 시 주의사항1. 새 문제를 추가할 때는 반드시 `./scripts/new_problem.sh`를 사용할 것2. 풀이 작성 후 테스트가 통과하는지 확인할 것3. README.md의 문제 인덱스를 업데이트할 것 (`./scripts/update_readme.sh`)4. 커밋 메시지 형식: `solve: [출처][번호] 문제이름 (언어)`    - 예: `solve: [BOJ][1234] 두 포인터 (java, go, python)`
