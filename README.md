@@ -6,7 +6,7 @@
 
 | 총 문제 수 |
 |:---:|
-| **20** |
+| **21** |
 
 ## 📋 문제 목록
 
@@ -27,11 +27,12 @@
 | 13 | PG | [42842](https://programmers.co.kr/learn/courses/30/lessons/42842) | [PG] 42842 - 완전탐색 | lv2 | ✅ | ✅ | ✅ | search |
 | 14 | PG | [42860](https://programmers.co.kr/learn/courses/30/lessons/42860) | [PG] 42860 - 조이스틱 | lv2 | ✅ | ✅ | ✅ | greedy |
 | 15 | PG | [42862](https://programmers.co.kr/learn/courses/30/lessons/42862) | [PG] 42862 - 체육복 | lv1 | ✅ | ✅ | ✅ | greedy |
-| 16 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ✅ | dfs,bfs |
-| 17 | PG | [84512](https://programmers.co.kr/learn/courses/30/lessons/84512) | [PG] 84512 - 모음사진 | lv2 | ❌ | ❌ | ❌ | search |
-| 18 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
-| 19 | PG | [86971](https://programmers.co.kr/learn/courses/30/lessons/86971) | [PG] 86971 - 전력망을 둘로 나누기 | lv2 | ✅ | ✅ | ✅ | search |
-| 20 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
+| 16 | PG | [42883](https://programmers.co.kr/learn/courses/30/lessons/42883) | [PG] 42883 - 큰 수 만들기 | lv2 | ❌ | ❌ | ❌ | greedy |
+| 17 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ✅ | dfs,bfs |
+| 18 | PG | [84512](https://programmers.co.kr/learn/courses/30/lessons/84512) | [PG] 84512 - 모음사진 | lv2 | ✅ | ✅ | ✅ | search |
+| 19 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
+| 20 | PG | [86971](https://programmers.co.kr/learn/courses/30/lessons/86971) | [PG] 86971 - 전력망을 둘로 나누기 | lv2 | ✅ | ✅ | ✅ | search |
+| 21 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
 
 ## 🚀 시작하기
 
