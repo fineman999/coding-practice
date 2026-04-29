@@ -6,7 +6,7 @@
 
 | 총 문제 수 |
 |:---:|
-| **30** |
+| **31** |
 
 ## 📋 문제 목록
 
@@ -36,12 +36,13 @@
 | 22 | PG | [42884](https://programmers.co.kr/learn/courses/30/lessons/42884) | [PG] 42884 - 단속카메라 | lv3 | ✅ | ✅ | ✅ | greedy |
 | 23 | PG | [42885](https://programmers.co.kr/learn/courses/30/lessons/42885) | [PG] 42885 - 구명보트 | lv2 | ✅ | ✅ | ✅ | greedy |
 | 24 | PG | [42895](https://programmers.co.kr/learn/courses/30/lessons/42895) | [PG] 42895 - N으로 표현 | lv3 | ✅ | ✅ | ✅ | DP |
-| 25 | PG | [43105](https://programmers.co.kr/learn/courses/30/lessons/43105) | [PG] 43105 - 정수 삼각형 | lv3 | ❌ | ❌ | ❌ | DP |
-| 26 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ✅ | dfs,bfs |
-| 27 | PG | [84512](https://programmers.co.kr/learn/courses/30/lessons/84512) | [PG] 84512 - 모음사진 | lv2 | ✅ | ✅ | ✅ | search |
-| 28 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
-| 29 | PG | [86971](https://programmers.co.kr/learn/courses/30/lessons/86971) | [PG] 86971 - 전력망을 둘로 나누기 | lv2 | ✅ | ✅ | ✅ | search |
-| 30 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
+| 25 | PG | [42898](https://programmers.co.kr/learn/courses/30/lessons/42898) | [PG] 42898 - 등굣길 | lv3 | ❌ | ❌ | ❌ | DP |
+| 26 | PG | [43105](https://programmers.co.kr/learn/courses/30/lessons/43105) | [PG] 43105 - 정수 삼각형 | lv3 | ✅ | ✅ | ✅ | DP |
+| 27 | PG | [43165](https://programmers.co.kr/learn/courses/30/lessons/43165) | [PG] 43165 - 타겟 넘버 | lv2 | ✅ | ✅ | ✅ | dfs,bfs |
+| 28 | PG | [84512](https://programmers.co.kr/learn/courses/30/lessons/84512) | [PG] 84512 - 모음사진 | lv2 | ✅ | ✅ | ✅ | search |
+| 29 | PG | [86491](https://programmers.co.kr/learn/courses/30/lessons/86491) | [PG] 86491 - 최소직사각형 | lv1 | ✅ | ✅ | ✅ | search |
+| 30 | PG | [86971](https://programmers.co.kr/learn/courses/30/lessons/86971) | [PG] 86971 - 전력망을 둘로 나누기 | lv2 | ✅ | ✅ | ✅ | search |
+| 31 | PG | [87946](https://programmers.co.kr/learn/courses/30/lessons/87946) | [PG] 87946 - 피로도 | lv2 | ✅ | ✅ | ✅ | search |
 
 ## 🚀 시작하기
 
