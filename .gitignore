@@ -11,8 +11,12 @@ go/bin/
 # Python
 python/__pycache__/
 python/problems/**/__pycache__/
+python/test/
 *.pyc
 .pytest_cache/
+
+# Local tools
+skills/
 
 # IDE
 .idea/

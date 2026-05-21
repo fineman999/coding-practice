@@ -4,8 +4,8 @@ https://programmers.co.kr/learn/courses/30/lessons/84021
 난이도: lv3
 태그: DFS/BFS
 
-시간복잡도: O(N*2)
-공간복잡도: O(N*2)
+시간복잡도: O(N^2)
+공간복잡도: O(N^2)
 """
 
 import sys

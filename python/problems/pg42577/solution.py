@@ -8,8 +8,36 @@ https://programmers.co.kr/learn/courses/30/lessons/42577
 공간복잡도: O(n)
 """
 
+import sys
 
-def solution(phone_book: list[str]) -> bool:
-    phone_book.sort()
-    return not any(p2.startswith(p1) for p1, p2 in zip(phone_book, phone_book[1:]))
+input_data = sys.stdin.readline
+
+def solution(phone_book: list[str]):
+    # 길이 크기로 내림차순
+    phone_book.sort(key= lambda n: len(n), reverse=True)
+
+    phone_map = set()
+    for phone in phone_book:
+        phone_map.add(phone)
+
+    for phone in phone_book:
+        temp = ""
+        for i in range(len(phone)-1):
+            temp += phone[i]
+            if temp in phone_map:
+                return False
+    return True
+
+
+
+
+
+def solve():
+    phone_book = list(map(int, input_data().split()))
+    
+    solution(phone_book)
+
+if __name__=="__main__":
+    solve()
+
 
