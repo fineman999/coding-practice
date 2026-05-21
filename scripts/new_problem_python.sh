@@ -17,6 +17,12 @@ urldecode() {
     printf '%b' "${encoded//%/\\x}"
 }
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 if [[ "${1:-}" =~ ^https://level\.goorm\.io/exam/([0-9]+)/([^/]+)/quiz/([0-9]+)$ ]]; then
     SOURCE="grm"
     NUMBER="${BASH_REMATCH[1]}"
@@ -51,7 +57,7 @@ if [ -z "${URL:-}" ]; then
     case "$SOURCE" in
         boj) URL="https://www.acmicpc.net/problem/${NUMBER}" ;;
         pg)  URL="https://programmers.co.kr/learn/courses/30/lessons/${NUMBER}" ;;
-        lc)  URL="https://leetcode.com/problems/" ;;
+        lc)  URL="https://leetcode.com/problems/$(leetcode_slug "${TITLE}")/" ;;
         grm) URL="https://level.goorm.io/exam/${NUMBER}" ;;
         *)   URL="" ;;
     esac
@@ -84,7 +90,19 @@ echo "📝 Python 전용 새 문제 생성: [${SOURCE_UPPER}][${NUMBER}] ${TITLE
 
 mkdir -p "$PY_DIR"
 
-cat > "${PY_DIR}/solution.py" << PY_EOF
+if [ "$SOURCE" = "lc" ]; then
+    cat > "${PY_DIR}/solution.py" << PY_EOF
+"""
+[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
+${URL}
+난이도: ${DIFFICULTY}
+태그: ${TAGS}
+
+LeetCode 제출용 시그니처를 직접 작성하세요.
+"""
+PY_EOF
+else
+    cat > "${PY_DIR}/solution.py" << PY_EOF
 """
 [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
 ${URL}
@@ -95,5 +113,6 @@ ${URL}
 공간복잡도: O(?)
 """
 PY_EOF
+fi
 
 echo "  ✅ Python solution.py 껍데기 생성 완료"

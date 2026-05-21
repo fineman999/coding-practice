@@ -24,6 +24,12 @@ TITLE="$3"
 DIFFICULTY="${4:-}"
 TAGS="${5:-}"
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 # 프로젝트 루트 경로 (스크립트 위치 기준)
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -34,7 +40,7 @@ PROBLEM_ID="${SOURCE}${NUMBER}"
 case "$SOURCE" in
     boj) URL="https://www.acmicpc.net/problem/${NUMBER}" ;;
     pg)  URL="https://programmers.co.kr/learn/courses/30/lessons/${NUMBER}" ;;
-    lc)  URL="https://leetcode.com/problems/" ;;
+    lc)  URL="https://leetcode.com/problems/$(leetcode_slug "${TITLE}")/" ;;
     *)   URL="" ;;
 esac
 
@@ -60,9 +66,27 @@ SOURCE_UPPER=$(echo "$SOURCE" | tr '[:lower:]' '[:upper:]')
 echo "📝 새 문제 생성: [${SOURCE_UPPER}][${NUMBER}] ${TITLE}"
 
 # ─── Java ───────────────────────────────────────────────
-mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
+if [ "$SOURCE" = "lc" ]; then
+    mkdir -p "$JAVA_DIR"
+else
+    mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
+fi
 
-cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
+if [ "$SOURCE" = "lc" ]; then
+    cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
+package problems.${PROBLEM_ID};
+
+/**
+ * [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
+ * ${URL}
+ * 난이도: ${DIFFICULTY}
+ * 태그: ${TAGS}
+ *
+ * LeetCode 제출용 시그니처를 직접 작성하세요.
+ */
+JAVA_EOF
+else
+    cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
 package problems.${PROBLEM_ID};
 
 /**
@@ -81,8 +105,10 @@ public class Solution {
     }
 }
 JAVA_EOF
+fi
 
-cat > "${JAVA_TEST_DIR}/SolutionTest.java" << JAVA_TEST_EOF
+if [ "$SOURCE" != "lc" ]; then
+    cat > "${JAVA_TEST_DIR}/SolutionTest.java" << JAVA_TEST_EOF
 package problems.${PROBLEM_ID};
 
 import org.junit.jupiter.api.DisplayName;
@@ -127,13 +153,25 @@ class SolutionTest {
     }
 }
 JAVA_TEST_EOF
+fi
 
 echo "  ✅ Java 템플릿 생성 완료"
 
 # ─── Go ─────────────────────────────────────────────────
 mkdir -p "$GO_DIR"
 
-cat > "${GO_DIR}/solution.go" << GO_EOF
+if [ "$SOURCE" = "lc" ]; then
+    cat > "${GO_DIR}/solution.go" << GO_EOF
+// Package ${PROBLEM_ID} - [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
+// ${URL}
+// 난이도: ${DIFFICULTY}
+// 태그: ${TAGS}
+//
+// LeetCode 제출용 시그니처를 직접 작성하세요.
+package ${PROBLEM_ID}
+GO_EOF
+else
+    cat > "${GO_DIR}/solution.go" << GO_EOF
 // Package ${PROBLEM_ID} - [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
 // ${URL}
 // 난이도: ${DIFFICULTY}
@@ -147,8 +185,10 @@ func Solution() int {
 	panic("not implemented")
 }
 GO_EOF
+fi
 
-cat > "${GO_DIR}/solution_test.go" << GO_TEST_EOF
+if [ "$SOURCE" != "lc" ]; then
+    cat > "${GO_DIR}/solution_test.go" << GO_TEST_EOF
 package ${PROBLEM_ID}
 
 import "testing"
@@ -188,6 +228,7 @@ func BenchmarkSolution(b *testing.B) {
 	}
 }
 GO_TEST_EOF
+fi
 
 echo "  ✅ Go 템플릿 생성 완료"
 
@@ -197,7 +238,19 @@ mkdir -p "$PY_DIR"
 cat > "${PY_DIR}/__init__.py" << 'INIT_EOF'
 INIT_EOF
 
-cat > "${PY_DIR}/solution.py" << PY_EOF
+if [ "$SOURCE" = "lc" ]; then
+    cat > "${PY_DIR}/solution.py" << PY_EOF
+"""
+[${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
+${URL}
+난이도: ${DIFFICULTY}
+태그: ${TAGS}
+
+LeetCode 제출용 시그니처를 직접 작성하세요.
+"""
+PY_EOF
+else
+    cat > "${PY_DIR}/solution.py" << PY_EOF
 """
 [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
 ${URL}
@@ -212,8 +265,10 @@ ${URL}
 def solution() -> int:
     raise NotImplementedError("풀이를 작성하세요")
 PY_EOF
+fi
 
-cat > "${PY_DIR}/test_solution.py" << PY_TEST_EOF
+if [ "$SOURCE" != "lc" ]; then
+    cat > "${PY_DIR}/test_solution.py" << PY_TEST_EOF
 import pytest
 from .solution import solution
 
@@ -233,6 +288,7 @@ class TestSolution:
         """큰 입력"""
         pass
 PY_TEST_EOF
+fi
 
 echo "  ✅ Python 템플릿 생성 완료"
 

@@ -27,10 +27,22 @@ elif ! "${PYTHON_BIN}" -c "import pytest" >/dev/null 2>&1; then
     PYTHON_TEST_RUNNER_NOTE="${PYTHON_BIN} 환경에 pytest 가 없어 Python 테스트 판정을 건너뜁니다."
 fi
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | sed -E 's/^\[[^]]+\][[:space:]]*[0-9]+[[:space:]]*-[[:space:]]*//' \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 check_python() {
     local problem_id="$1"
 
     if [ ! -f "${PY_MAIN_DIR}/${problem_id}/solution.py" ]; then
+        echo "❌"
+        return
+    fi
+
+    if [ ! -f "${PY_MAIN_DIR}/${problem_id}/test_solution.py" ]; then
         echo "❌"
         return
     fi
@@ -105,7 +117,7 @@ for problem_id in $PROBLEM_IDS; do
     case "$source" in
         boj) link="[${number}](https://www.acmicpc.net/problem/${number})"; src_label="BOJ" ;;
         pg)  link="[${number}](https://programmers.co.kr/learn/courses/30/lessons/${number})"; src_label="PG" ;;
-        lc)  link="[${number}](https://leetcode.com/problems/)"; src_label="LC" ;;
+        lc)  link="[${number}](https://leetcode.com/problems/$(leetcode_slug "${title}")/)"; src_label="LC" ;;
         *)   link="${number}"; src_label=$(echo "$source" | tr '[:lower:]' '[:upper:]') ;;
     esac
 

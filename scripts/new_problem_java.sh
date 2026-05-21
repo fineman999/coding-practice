@@ -23,13 +23,19 @@ TITLE="$3"
 DIFFICULTY="${4:-}"
 TAGS="${5:-}"
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROBLEM_ID="${SOURCE}${NUMBER}"
 
 case "$SOURCE" in
     boj) URL="https://www.acmicpc.net/problem/${NUMBER}" ;;
     pg)  URL="https://programmers.co.kr/learn/courses/30/lessons/${NUMBER}" ;;
-    lc)  URL="https://leetcode.com/problems/" ;;
+    lc)  URL="https://leetcode.com/problems/$(leetcode_slug "${TITLE}")/" ;;
     *)   URL="" ;;
 esac
 
@@ -43,9 +49,27 @@ fi
 SOURCE_UPPER=$(echo "$SOURCE" | tr '[:lower:]' '[:upper:]')
 echo "📝 Java 전용 새 문제 생성: [${SOURCE_UPPER}][${NUMBER}] ${TITLE}"
 
-mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
+if [ "$SOURCE" = "lc" ]; then
+    mkdir -p "$JAVA_DIR"
+else
+    mkdir -p "$JAVA_DIR" "$JAVA_TEST_DIR"
+fi
 
-cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
+if [ "$SOURCE" = "lc" ]; then
+    cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
+package problems.${PROBLEM_ID};
+
+/**
+ * [${SOURCE_UPPER}] ${NUMBER} - ${TITLE}
+ * ${URL}
+ * 난이도: ${DIFFICULTY}
+ * 태그: ${TAGS}
+ *
+ * LeetCode 제출용 시그니처를 직접 작성하세요.
+ */
+JAVA_EOF
+else
+    cat > "${JAVA_DIR}/Solution.java" << JAVA_EOF
 package problems.${PROBLEM_ID};
 
 /**
@@ -64,8 +88,10 @@ public class Solution {
     }
 }
 JAVA_EOF
+fi
 
-cat > "${JAVA_TEST_DIR}/SolutionTest.java" << JAVA_TEST_EOF
+if [ "$SOURCE" != "lc" ]; then
+    cat > "${JAVA_TEST_DIR}/SolutionTest.java" << JAVA_TEST_EOF
 package problems.${PROBLEM_ID};
 
 import org.junit.jupiter.api.DisplayName;
@@ -111,4 +137,5 @@ class SolutionTest {
     }
 }
 JAVA_TEST_EOF
+fi
 echo "  ✅ Java main/test 템플릿 생성 완료"

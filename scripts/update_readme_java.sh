@@ -10,10 +10,22 @@ README="${ROOT}/README.md"
 JAVA_ROOT="${ROOT}/java"
 JAVA_MAIN_DIR="${JAVA_ROOT}/src/main/java/problems"
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | sed -E 's/^\[[^]]+\][[:space:]]*[0-9]+[[:space:]]*-[[:space:]]*//' \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 check_java() {
     local problem_id="$1"
 
     if [ ! -f "${JAVA_MAIN_DIR}/${problem_id}/Solution.java" ]; then
+        echo "❌"
+        return
+    fi
+
+    if [ ! -f "${JAVA_ROOT}/src/test/java/problems/${problem_id}/SolutionTest.java" ]; then
         echo "❌"
         return
     fi
@@ -81,7 +93,7 @@ for problem_id in $PROBLEM_IDS; do
     case "$source" in
         boj) link="[${number}](https://www.acmicpc.net/problem/${number})"; src_label="BOJ" ;;
         pg)  link="[${number}](https://programmers.co.kr/learn/courses/30/lessons/${number})"; src_label="PG" ;;
-        lc)  link="[${number}](https://leetcode.com/problems/)"; src_label="LC" ;;
+        lc)  link="[${number}](https://leetcode.com/problems/$(leetcode_slug "${title}")/)"; src_label="LC" ;;
         *)   link="${number}"; src_label=$(echo "$source" | tr '[:lower:]' '[:upper:]') ;;
     esac
 

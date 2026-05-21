@@ -28,6 +28,13 @@ elif ! "${PYTHON_BIN}" -c "import pytest_benchmark" >/dev/null 2>&1; then
     PYTHON_TEST_RUNNER_NOTE="${PYTHON_BIN} 환경에 pytest-benchmark 가 없어 Python 테스트 판정을 건너뜁니다."
 fi
 
+leetcode_slug() {
+    printf '%s' "$1" \
+        | sed -E 's/^\[[^]]+\][[:space:]]*[0-9]+[[:space:]]*-[[:space:]]*//' \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
 # ─── 언어별 풀이 상태 확인 (테스트 통과 여부) ──────────────────
 check_lang() {
     local problem_id="$1"
@@ -35,19 +42,22 @@ check_lang() {
     local go_status="❌"
     local python_status="❌"
 
-    if [ -f "${ROOT}/java/src/main/java/problems/${problem_id}/Solution.java" ]; then
+    if [ -f "${ROOT}/java/src/main/java/problems/${problem_id}/Solution.java" ] \
+        && [ -f "${ROOT}/java/src/test/java/problems/${problem_id}/SolutionTest.java" ]; then
         if (cd "${ROOT}/java" && ./gradlew test --tests "problems.${problem_id}.SolutionTest" -q >/dev/null 2>&1); then
             java_status="✅"
         fi
     fi
 
-    if [ -f "${ROOT}/go/problems/${problem_id}/solution.go" ]; then
+    if [ -f "${ROOT}/go/problems/${problem_id}/solution.go" ] \
+        && [ -f "${ROOT}/go/problems/${problem_id}/solution_test.go" ]; then
         if (cd "${ROOT}/go" && go test "./problems/${problem_id}/" >/dev/null 2>&1); then
             go_status="✅"
         fi
     fi
 
-    if [ -f "${ROOT}/python/problems/${problem_id}/solution.py" ]; then
+    if [ -f "${ROOT}/python/problems/${problem_id}/solution.py" ] \
+        && [ -f "${ROOT}/python/problems/${problem_id}/test_solution.py" ]; then
         case "${PYTHON_TEST_RUNNER_STATUS}" in
             ready)
                 if (cd "${ROOT}/python" && "${PYTHON_BIN}" -m pytest "problems/${problem_id}/" -q >/dev/null 2>&1); then
@@ -124,7 +134,7 @@ for problem_id in $PROBLEM_IDS; do
     case "$source" in
         boj) link="[${number}](https://www.acmicpc.net/problem/${number})" ; src_label="BOJ" ;;
         pg)  link="[${number}](https://programmers.co.kr/learn/courses/30/lessons/${number})" ; src_label="PG" ;;
-        lc)  link="[${number}](https://leetcode.com/problems/)" ; src_label="LC" ;;
+        lc)  link="[${number}](https://leetcode.com/problems/$(leetcode_slug "${title}")/)" ; src_label="LC" ;;
         *)   link="${number}" ; src_label=$(echo "$source" | tr '[:lower:]' '[:upper:]') ;;
     esac
 
